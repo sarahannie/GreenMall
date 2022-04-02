@@ -15,10 +15,10 @@ const MenuItem =({title, imageUrl,size, linkUrl}) =>{
             }} 
         />
                 <div className='content'>
-                    <h1 className='title'>{title}</h1>
+                    <h1 className='title'>{title.toUpperCase()}</h1>
                     <span className='sub-title'>SHOP NOW</span>
                 </div>
     </div>)
 };
 
-export default (MenuItem);
+export default MenuItem;
