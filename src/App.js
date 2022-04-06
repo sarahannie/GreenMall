@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './component/header/header.component';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { createUserProfileDocument } from './firebase/fiebase.util';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
@@ -36,20 +36,31 @@ class App extends React.Component{
 
 
   render(){
+    const { currentUser } =this.props;
     return (
       <div >
         <Header  />
         <Routes>
           <Route exact path='/' element={<HomePage />} />
           <Route  path='/shop' element={<ShopPage />} />
-          <Route  path='/signin' element={<SignInAndSignUp />} />
+          <Route  
+          path='/signin' 
+           element ={ currentUser ? 
+            <Navigate  replace to='/' />
+            : 
+            <SignInAndSignUp />
+            } 
+            />
         </Routes> 
       </div>
     );
   }
  
 }
+const mapStateToProps = ({ user }) =>({
+  currentUser: user.currentUser
+})
  const mapDistchToProps = dispatch =>({
    setCurrentUser:user => dispatch(setCurrentUser(user))
  })
-export default connect(null, mapDistchToProps)( App);
+export default connect(mapStateToProps, mapDistchToProps)( App);
